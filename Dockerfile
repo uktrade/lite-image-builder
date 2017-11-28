@@ -8,6 +8,9 @@ ENV SCALA_VERSION 2.12.1
 ENV SBT_VERSION 0.13.12
 ENV BASE_FRAMEWORK_CODE 2.5.x
 
+RUN groupadd -g 1000 ubuntu && \
+useradd -u 1000 -g 1000 -m -s /bin/bash ubuntu
+
 # Scala expects this file
 RUN touch /usr/lib/jvm/java-8-openjdk-amd64/release
 
@@ -25,15 +28,21 @@ RUN \
   rm sbt-$SBT_VERSION.deb && \
   apt-get update && \
   apt-get install sbt && \
-  rm -rf /var/lib/apt/lists/* && \
-  sbt sbtVersion
+  rm -rf /var/lib/apt/lists/*
+  
+# Run following commands as Ubuntu user
+USER ubuntu:ubuntu
+ENV HOME /home/ubuntu
 
 # Define working directory
-WORKDIR /root
+WORKDIR /home/ubuntu
 
 # Install dependencies for base framework
-RUN git clone https://github.com/playframework/play-java-starter-example.git &&\
-    cd play-java-starter-example &&\
-    git checkout $BASE_FRAMEWORK_CODE &&\
-    sbt dist &&\
-    rm -rf /root/play-java-starter-example
+RUN \
+    sbt sbtVersion && \
+    git clone https://github.com/playframework/play-java-starter-example.git && \
+    cd play-java-starter-example && \
+    git checkout $BASE_FRAMEWORK_CODE && \
+    sbt dist && \
+    cd .. && \
+    rm -rf play-java-starter-example
