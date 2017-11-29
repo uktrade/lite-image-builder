@@ -40,7 +40,7 @@ WORKDIR /home/ubuntu
 # Install dependencies for base framework
 RUN \
     sbt sbtVersion && \
-    git clone https://github.com/playframework/play-java-starter-example.git && \
+    git clone https://github.com/petenattress/play-java-starter-example.git && \
     cd play-java-starter-example && \
     git checkout $BASE_FRAMEWORK_CODE && \
     sbt dist && \
