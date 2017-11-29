@@ -1,12 +1,9 @@
-# FROM ubuntu:16.04
-
 # Pull base image
 FROM openjdk:8u151
 
 # Env variables
 ENV SCALA_VERSION 2.12.1
 ENV SBT_VERSION 0.13.12
-ENV BASE_FRAMEWORK_CODE 2.5.x
 
 RUN groupadd -g 1000 ubuntu && \
 useradd -u 1000 -g 1000 -m -s /bin/bash ubuntu
@@ -40,9 +37,8 @@ WORKDIR /home/ubuntu
 # Install dependencies for base framework
 RUN \
     sbt sbtVersion && \
-    git clone https://github.com/petenattress/play-java-starter-example.git && \
-    cd play-java-starter-example && \
-    git checkout $BASE_FRAMEWORK_CODE && \
+    git clone https://github.com/uktrade/lite-image-builder.git && \
+    cd lite-image-builder && \
     sbt dist && \
     cd .. && \
-    rm -rf play-java-starter-example
+    rm -rf lite-image-builder
