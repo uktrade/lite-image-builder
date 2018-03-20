@@ -8,6 +8,14 @@ ENV SBT_VERSION 0.13.12
 RUN groupadd -g 1000 ubuntu && \
 useradd -u 1000 -g 1000 -m -s /bin/bash ubuntu
 
+# Install SonarQube Scanner client
+RUN \
+    cd /usr/local/lib && \
+    wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip && \
+    unzip sonar-scanner-cli-3.0.3.778-linux.zip && \
+    echo "export PATH=/usr/local/lib/sonar-scanner-3.0.3.778-linux/bin:$PATH" >> /home/ubuntu/.bashrc && \
+    echo "sonar.host.url=https://sonarqube.ci.uktrade.io" >> /usr/local/lib/sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+
 # Scala expects this file
 RUN touch /usr/lib/jvm/java-8-openjdk-amd64/release
 
