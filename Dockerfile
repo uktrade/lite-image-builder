@@ -14,6 +14,7 @@ RUN \
     wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip && \
     unzip sonar-scanner-cli-3.0.3.778-linux.zip && \
     echo "export PATH=/usr/local/lib/sonar-scanner-3.0.3.778-linux/bin:$PATH" >> /home/ubuntu/.bashrc && \
+    echo "export PATH=/usr/local/lib/sonar-scanner-3.0.3.778-linux/bin:$PATH" >> /home/ubuntu/.profile && \
     echo "sonar.host.url=https://sonarqube.ci.uktrade.io" >> /usr/local/lib/sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
 
 # Scala expects this file
